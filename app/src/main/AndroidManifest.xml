@@ -30,6 +30,10 @@
         <activity
             android:name=".ArtsListingActivity"
             android:label="@string/title_activity_arts_listing"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MyProfile"
+            android:label="@string/title_activity_my_profile"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

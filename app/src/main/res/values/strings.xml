@@ -155,4 +155,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_arts_listing">ArtsListingActivity</string>
+    <string name="title_activity_my_profile">MyProfile</string>
 </resources>
