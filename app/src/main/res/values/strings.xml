@@ -158,4 +158,5 @@
     <string name="title_activity_my_profile">MyProfile</string>
     <string name="title_activity_test_lifi">TestLifi</string>
     <string name="title_activity_nfc">NFCActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
 </resources>
