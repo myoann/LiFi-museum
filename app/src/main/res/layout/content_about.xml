@@ -12,4 +12,30 @@
     tools:context="lifi.lifi_museum.AboutActivity"
     tools:showIn="@layout/activity_about">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Application réalisée par les étudiants :"
+            android:id="@+id/textView2"
+            android:textColor="@color/colorText"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fabrice Jauvat, Thibaut Linares, Florian Massa, Moïse Yoann"
+            android:id="@+id/textView4" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView3"
+            android:src="@drawable/MBDS" />
+    </LinearLayout>
+
 </RelativeLayout>

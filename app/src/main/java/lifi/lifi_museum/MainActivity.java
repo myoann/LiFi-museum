@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +36,22 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        Button bAccesLifi = (Button) findViewById(R.id.button_acces_lifi);
+        bAccesLifi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCible = new Intent(MainActivity.this, LifiActivity.class);
+                startActivity(intentCible);
+            }
+        });
+        Button bAccesListing = (Button) findViewById(R.id.liste_oeuvre);
+        bAccesLifi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCible = new Intent(MainActivity.this, ArtsListingActivity.class);
+                startActivity(intentCible);
+            }
+        });
     }
 
     @Override

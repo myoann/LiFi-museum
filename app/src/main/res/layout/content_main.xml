@@ -12,8 +12,62 @@
     tools:context="lifi.lifi_museum.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Application Musée LIFI"
+            android:id="@+id/TitreAccueil"
+            android:autoText="false"
+            android:gravity="center_horizontal" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/imageView2"
+            android:src="@drawable/musee" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vivez une expérience innovente au musée international de la parfumerie Grasse."
+            android:id="@+id/textView3"
+            android:textColor="@color/colorText"
+            android:padding="15dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Démarrer l&apos;expérience"
+                android:id="@+id/button_acces_lifi"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/colorButton"
+                android:padding="15dp" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="oeuvres"
+                android:id="@+id/liste_oeuvre"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/colorButton"
+                android:layout_marginLeft="15dp"
+                android:padding="15dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>
