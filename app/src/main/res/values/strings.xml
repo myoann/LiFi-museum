@@ -157,4 +157,5 @@
     <string name="title_activity_arts_listing">ArtsListingActivity</string>
     <string name="title_activity_my_profile">MyProfile</string>
     <string name="title_activity_test_lifi">TestLifi</string>
+    <string name="title_activity_nfc">NFCActivity</string>
 </resources>

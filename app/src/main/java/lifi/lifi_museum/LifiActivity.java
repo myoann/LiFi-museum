@@ -1,17 +1,13 @@
 package lifi.lifi_museum;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
-import com.luciom.opticallbs.SmartLightHandlerAbs;
 import com.luciom.opticallbs.SmartLightRunnable;
 
-public class TestLifi extends AppCompatActivity {
+public class LifiActivity extends AppCompatActivity {
 
     private SmartLightRunnable smartLight = null;
     private Thread lifiThread = null;
@@ -19,12 +15,15 @@ public class TestLifi extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_lifi);
+        setContentView(R.layout.activity_lifi);
         mHandler = new SmartLightHandler((TextView)findViewById(R.id.id_filteredTxtView),
                 (TextView)findViewById(R.id.msgTxtView));
         smartLight = new SmartLightRunnable(mHandler, getApplicationContext());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Add the Up Action
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     @Override
     public void onResume() {

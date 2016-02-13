@@ -3,13 +3,13 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_lifi"
             android:icon="@drawable/ic_menu_camera"
-            android:title="-" />
+            android:title="LIFI" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="-" />
+            android:id="@+id/nav_nfc"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="NFC" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
