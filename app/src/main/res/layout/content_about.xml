@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/imageView3"
-            android:src="@drawable/MBDS" />
+            android:src="@drawable/mbds_logo" />
     </LinearLayout>
 
 </RelativeLayout>

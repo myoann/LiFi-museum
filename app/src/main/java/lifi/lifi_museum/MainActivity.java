@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
         Button bAccesListing = (Button) findViewById(R.id.liste_oeuvre);
-        bAccesLifi.setOnClickListener(new View.OnClickListener() {
+        bAccesListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentCible = new Intent(MainActivity.this, ArtsListingActivity.class);
@@ -102,10 +102,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this, ArtsListingActivity.class));
         } else if (id == R.id.nav_manage) {
             startActivity(new Intent(this, SettingsActivity.class));
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_about) {
+            startActivity(new Intent(this, AboutActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
