@@ -1,6 +1,7 @@
 package lifi.lifi_museum;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
+
+import java.sql.SQLOutput;
 
 public class ArtsListingActivity extends AppCompatActivity implements ResultCallBack {
     ListView listView ;
@@ -108,12 +111,12 @@ public class ArtsListingActivity extends AppCompatActivity implements ResultCall
                                     int position, long id) {
 
                 // ListView Clicked item index
-                int itemPosition     = position;
+                int itemPosition = position;
 
                 // ListView Clicked item value
-                String  itemValue    = (String) listView.getItemAtPosition(position);
-                String  descriptionValue    = (String) description[position];
-                int  imageValue    = (int) images[position];
+                String itemValue = (String) listView.getItemAtPosition(position);
+                String descriptionValue = (String) description[position];
+                int imageValue = (int) images[position];
 
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
@@ -122,9 +125,9 @@ public class ArtsListingActivity extends AppCompatActivity implements ResultCall
 
                 // redirect to new page
                 Intent redirectIntent = new Intent(ArtsListingActivity.this, DetailsActivity.class);
-                redirectIntent.putExtra("position",itemPosition);
+                redirectIntent.putExtra("position", itemPosition);
                 redirectIntent.putExtra("value", itemValue);
-                redirectIntent.putExtra("description",descriptionValue);
+                redirectIntent.putExtra("description", descriptionValue);
                 redirectIntent.putExtra("image", imageValue);
                 startActivity(redirectIntent);
 
@@ -136,10 +139,38 @@ public class ArtsListingActivity extends AppCompatActivity implements ResultCall
         server = ConnectServer.getInstance();
         server.get_oeuvres(aq, this);
 
+
+
     }
 
     @Override
     public void ResultCallBack() {
+
         Log.d("Oeuvre 1", server.getOeuvres().get(0) + "");
+        OeuvreManager m = new OeuvreManager(this); // gestionnaire de la table "animal"
+        m.open(); // ouverture de la table en lecture/écriture
+        m.dropTableOeuvre();
+        m.createTableOeuvre();
+        System.out.println("Oeuvre SIZE :" + server.getOeuvres().size());
+        for (int i =0;i<server.getOeuvres().size();i++){
+            System.out.println(server.getOeuvres().get(i).getNom());
+            m.addOeuvre(server.getOeuvres().get(i));
+        }
+        Cursor c = m.getOeuvres();
+        if (c.moveToFirst())
+        {
+            do {
+                Log.d("test",
+                        c.getString(c.getColumnIndex(OeuvreManager.KEY_ID_OEUVRE)) + ",\n" +
+                        c.getString(c.getColumnIndex(OeuvreManager.KEY_NOM_OEUVRE)) + ",\n" +
+                        c.getString(c.getColumnIndex(OeuvreManager.KEY_DESCRIPTION_OEUVRE)) + ",\n" +
+                        c.getString(c.getColumnIndex(OeuvreManager.KEY_EPOQUE_OEUVRE)) + ","
+                );
+            }
+            while (c.moveToNext());
+        }
+        c.close(); // fermeture du curseur
+        // fermeture du gestionnaire
+        m.close();
     }
 }

@@ -35,13 +35,25 @@ public class ConnectServer {
     }
 
     public static class Oeuvre {
-
         public String nom;
         public String description;
         public String epoque;
         public String createdAt;
         public String updatedAt;
         public String id;
+        public Oeuvre(){
+
+        }
+
+
+        public String getNom() {return nom;}
+        public void setNom(String nom) {this.nom = nom;}
+        public String getDescription() {return description;}
+        public void setDescription(String description) {this.description = description;}
+        public String getEpoque() {return epoque;}
+        public void setEpoque(String epoque) {this.epoque = epoque;}
+        public String getId() {return id;}
+        public void setId(String id) {this.id = id;}
     }
 
     private static class GsonTransformer implements Transformer {
