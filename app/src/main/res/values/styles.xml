@@ -16,5 +16,12 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
+    <style name='BoutonValidation'>
+        <item name="android:textColor">@color/colorTextButton</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:padding">5dp</item>
+    </style>
+    <style name='BoutonValidationMarginLeft' parent="BoutonValidation">
+        <item name="android:layout_marginLeft">15dp</item>
+    </style>
 </resources>
