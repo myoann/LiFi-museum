@@ -22,7 +22,9 @@ import com.androidquery.AQuery;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.sql.SQLOutput;
+import java.util.ArrayList;
 
 public class ArtsListingActivity extends AppCompatActivity implements ResultCallBack {
     ListView listView ;
@@ -38,7 +40,7 @@ public class ArtsListingActivity extends AppCompatActivity implements ResultCall
         listView = (ListView) findViewById(R.id.list);
 
         // Defined Array values to show in ListView
-        String[] values = new String[] { "La Joconde",
+       /* String[] values = new String[] { "La Joconde",
                 "Le Cri",
                 "Portrait d'Adele Bloch-Bauer",
                 "Bal du moulin de la Galette",
@@ -46,7 +48,7 @@ public class ArtsListingActivity extends AppCompatActivity implements ResultCall
                 "Garçon à la pipe",
                 "Guernica",
                 "Le rêve"
-        };
+        };*/
 
         final String[] description = new String[] {
                 // La joconde
@@ -106,7 +108,7 @@ public class ArtsListingActivity extends AppCompatActivity implements ResultCall
         // Second parameter - Layout for the row
         // Third parameter - ID of the TextView to which the data is written
         // Forth - the Array of data
-
+        ArrayList<String> values = this.recupererListeOeuvre();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, values);
 
@@ -156,6 +158,29 @@ public class ArtsListingActivity extends AppCompatActivity implements ResultCall
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+    }
+    public ArrayList<String> recupererListeOeuvre(){
+        ArrayList<String> res = new ArrayList<String>();
+        OeuvreManager oeuvreManager = new OeuvreManager(this); // gestionnaire de la table "oeuvre"
+        ImageManager imageManager = new ImageManager(this); // gestionnaire de la table "oeuvre"
+        oeuvreManager.open(); // ouverture de la table en lecture/écriture
+        imageManager.open();
+        Cursor cursorOeuvre = oeuvreManager.getOeuvres();
+        Cursor cursorImage = imageManager.getImages();
+        if (cursorOeuvre.moveToFirst())
+        {
+            do {
+                res.add(cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_NOM_OEUVRE)));
+                Log.d("OEUVRE",
+                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_ID_OEUVRE)) + ",\n" +
+                                cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_NOM_OEUVRE)) + "\n"
+//                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_DESCRIPTION_OEUVRE)) + ",\n" +
+//                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_UPDATEAT_OEUVRE)) + ""
+                );
+            }
+            while (cursorOeuvre.moveToNext());
+        }
+        return res;
     }
 
     @Override

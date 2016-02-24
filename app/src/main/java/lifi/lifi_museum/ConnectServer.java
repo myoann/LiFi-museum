@@ -57,7 +57,15 @@ public class ConnectServer {
         public ArrayList<Image> images;
         public String updatedAt;
         public String id;
+
         public Oeuvre(){
+
+        }
+        public Oeuvre(String name, String description, String id) {
+            this.name = name;
+            this.description = description;
+            this.id = id;
+            //a voir pour les images
         }
 
         public String getUpdatedAt() {return updatedAt;}
