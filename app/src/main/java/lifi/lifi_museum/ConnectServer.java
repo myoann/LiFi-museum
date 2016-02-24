@@ -57,9 +57,11 @@ public class ConnectServer {
         public ArrayList<Image> images;
         public String updatedAt;
         public String id;
+        public String lifi;
         public Oeuvre(){
         }
-
+        public String getLifi() {return lifi;}
+        public void setLifi(String lifi) {this.lifi = lifi;}
         public String getUpdatedAt() {return updatedAt;}
         public void setUpdatedAt(String updatedAt) {this.updatedAt = updatedAt;}
         public String getName() {return name;}

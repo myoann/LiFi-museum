@@ -15,6 +15,7 @@ public class OeuvreManager {
     public static final String KEY_NOM_OEUVRE="nom_oeuvre";
     public static final String KEY_DESCRIPTION_OEUVRE="description_oeuvre";
     public static final String KEY_UPDATEAT_OEUVRE="updatedAt_oeuvre";
+    public static final String KEY_LIFI_OEUVRE="lifi_oeuvre";
     public static final String DROP_TABLE_OEUVRE = "DROP TABLE IF EXISTS oeuvre;";
     public static final String CREATE_TABLE_OEUVRE = "CREATE TABLE IF NOT EXISTS "+TABLE_NAME+
             " (" +
@@ -22,6 +23,7 @@ public class OeuvreManager {
             " "+KEY_ID_OEUVRE+" TEXT," +
             " "+KEY_NOM_OEUVRE+" TEXT," +
             " "+KEY_DESCRIPTION_OEUVRE+" TEXT," +
+            " "+KEY_LIFI_OEUVRE+" TEXT," +
             " "+KEY_UPDATEAT_OEUVRE+" TEXT" +
             ");";
     private MySQLite maBaseSQLite; // notre gestionnaire du fichier SQLite
@@ -54,6 +56,7 @@ public class OeuvreManager {
         values.put(KEY_NOM_OEUVRE, oeuvre.getName());
         values.put(KEY_DESCRIPTION_OEUVRE, oeuvre.getDescription());
         values.put(KEY_UPDATEAT_OEUVRE, oeuvre.getUpdatedAt());
+        values.put(KEY_LIFI_OEUVRE, oeuvre.getLifi());
         // insert() retourne l'id du nouvel enregistrement inséré, ou -1 en cas d'erreur
         return db.insert(TABLE_NAME,null,values);
     }
