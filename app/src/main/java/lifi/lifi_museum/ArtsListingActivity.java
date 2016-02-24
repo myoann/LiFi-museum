@@ -1,23 +1,32 @@
 package lifi.lifi_museum;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.SQLOutput;
 
 public class ArtsListingActivity extends AppCompatActivity implements ResultCallBack {
     ListView listView ;
     ConnectServer server;
+    AQuery aq = new AQuery(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +89,8 @@ public class ArtsListingActivity extends AppCompatActivity implements ResultCall
                         "Detaille est médaillé et son tableau acheté par l'Etat qui le présente à l'Exposition Universelle de 1889. Tous les républicains s'accordent devant cette exaltation de l'armée nationale au moment où la République institue le service militaire pour tous les jeunes citoyens (loi du 15 juillet 1889)."
         };
 
-        final int[] images = new int[] { R.drawable.joconde,
+        final int[] images = new int[] {
+                R.drawable.joconde,
                 R.drawable.lecri,
                 R.drawable.portraitadele,
                 R.drawable.baldumoulin,
@@ -135,7 +145,7 @@ public class ArtsListingActivity extends AppCompatActivity implements ResultCall
 
         });
 
-        AQuery aq = new AQuery(this);
+
         server = ConnectServer.getInstance();
         server.get_oeuvres(aq, this);
 
@@ -147,30 +157,63 @@ public class ArtsListingActivity extends AppCompatActivity implements ResultCall
     public void ResultCallBack() {
 
         Log.d("Oeuvre 1", server.getOeuvres().get(0) + "");
-        OeuvreManager m = new OeuvreManager(this); // gestionnaire de la table "animal"
-        m.open(); // ouverture de la table en lecture/écriture
-        m.dropTableOeuvre();
-        m.createTableOeuvre();
-        System.out.println("Oeuvre SIZE :" + server.getOeuvres().size());
+        OeuvreManager oeuvreManager = new OeuvreManager(this); // gestionnaire de la table "oeuvre"
+        ImageManager imageManager = new ImageManager(this); // gestionnaire de la table "oeuvre"
+        oeuvreManager.open(); // ouverture de la table en lecture/écriture
+        imageManager.open();
+        oeuvreManager.dropTableOeuvre();
+        imageManager.dropTableImage();
+        oeuvreManager.createTableOeuvre();
+        imageManager.createTableImage();
+        System.out.println("---------------Oeuvre SIZE :" + server.getOeuvres().size() + " ---------------");
         for (int i =0;i<server.getOeuvres().size();i++){
-            System.out.println(server.getOeuvres().get(i).getNom());
-            m.addOeuvre(server.getOeuvres().get(i));
+            oeuvreManager.addOeuvre(server.getOeuvres().get(i));
+            for(int j=0;j<server.getOeuvres().get(i).getImages().size();j++){
+                imageManager.addImage(server.getOeuvres().get(i).getImages().get(j), server.getOeuvres().get(i).getId());
+            }
         }
-        Cursor c = m.getOeuvres();
-        if (c.moveToFirst())
+        Cursor cursorOeuvre = oeuvreManager.getOeuvres();
+        Cursor cursorImage = imageManager.getImages();
+        if (cursorOeuvre.moveToFirst())
         {
             do {
-                Log.d("test",
-                        c.getString(c.getColumnIndex(OeuvreManager.KEY_ID_OEUVRE)) + ",\n" +
-                        c.getString(c.getColumnIndex(OeuvreManager.KEY_NOM_OEUVRE)) + ",\n" +
-                        c.getString(c.getColumnIndex(OeuvreManager.KEY_DESCRIPTION_OEUVRE)) + ",\n" +
-                        c.getString(c.getColumnIndex(OeuvreManager.KEY_EPOQUE_OEUVRE)) + ","
+                Log.d("OEUVRE",
+                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_ID_OEUVRE)) + ",\n" +
+                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_NOM_OEUVRE)) + "\n"
+//                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_DESCRIPTION_OEUVRE)) + ",\n" +
+//                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_UPDATEAT_OEUVRE)) + ""
                 );
             }
-            while (c.moveToNext());
+            while (cursorOeuvre.moveToNext());
         }
-        c.close(); // fermeture du curseur
+        if (cursorImage.moveToFirst())
+        {
+            do {
+                String urlImage = cursorImage.getString(cursorImage.getColumnIndex(ImageManager.KEY_URL_IMAGE));
+                Log.d("IMAGE",
+                    cursorImage.getString(cursorImage.getColumnIndex(ImageManager.KEY_URL_IMAGE)) + ",\n" +
+                    cursorImage.getString(cursorImage.getColumnIndex(ImageManager.KEY_FOREIGNKEY_OEUVRE_IMAGE)) + "\n"
+                );
+
+                server.get_images(aq, this, urlImage);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            while (cursorImage.moveToNext());
+
+        }
+        cursorImage.close();
+        cursorOeuvre.close(); // fermeture du curseur
         // fermeture du gestionnaire
-        m.close();
+        oeuvreManager.close();
+        imageManager.close();
     }
+//    @Override
+//    public void ResultCallBackImage(){
+//
+//    }
+
 }

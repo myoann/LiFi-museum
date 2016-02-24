@@ -9,12 +9,12 @@ import android.database.sqlite.SQLiteDatabase;
  * Created by Fabrice on 16/02/2016.
  */
 public class OeuvreManager {
-    private static final String TABLE_NAME = "oeuvre";
+    public static final String TABLE_NAME = "oeuvre";
     public static final String KEY_ID = "id_oeuvre";
     public static final String KEY_ID_OEUVRE="id_oeuvre_mongo";//id MONGODB
     public static final String KEY_NOM_OEUVRE="nom_oeuvre";
     public static final String KEY_DESCRIPTION_OEUVRE="description_oeuvre";
-    public static final String KEY_EPOQUE_OEUVRE="epoque_oeuvre";
+    public static final String KEY_UPDATEAT_OEUVRE="updatedAt_oeuvre";
     public static final String DROP_TABLE_OEUVRE = "DROP TABLE IF EXISTS oeuvre;";
     public static final String CREATE_TABLE_OEUVRE = "CREATE TABLE IF NOT EXISTS "+TABLE_NAME+
             " (" +
@@ -22,7 +22,7 @@ public class OeuvreManager {
             " "+KEY_ID_OEUVRE+" TEXT," +
             " "+KEY_NOM_OEUVRE+" TEXT," +
             " "+KEY_DESCRIPTION_OEUVRE+" TEXT," +
-            " "+KEY_EPOQUE_OEUVRE+" TEXT" +
+            " "+KEY_UPDATEAT_OEUVRE+" TEXT" +
             ");";
     private MySQLite maBaseSQLite; // notre gestionnaire du fichier SQLite
     private SQLiteDatabase db;
@@ -32,10 +32,10 @@ public class OeuvreManager {
         maBaseSQLite = MySQLite.getInstance(context);
     }
     public void createTableOeuvre(){
-        maBaseSQLite.onCreate(db);
+        this.onCreate(db);
     }
     public void dropTableOeuvre(){
-        maBaseSQLite.onDrop(db);
+        this.onDrop(db);
     }
     public void open() {
         //on ouvre la table en lecture/écriture
@@ -51,9 +51,9 @@ public class OeuvreManager {
         // Ajout d'un enregistrement dans la table
         ContentValues values = new ContentValues();
         values.put(KEY_ID_OEUVRE, oeuvre.getId());
-        values.put(KEY_NOM_OEUVRE, oeuvre.getNom());
+        values.put(KEY_NOM_OEUVRE, oeuvre.getName());
         values.put(KEY_DESCRIPTION_OEUVRE, oeuvre.getDescription());
-        values.put(KEY_EPOQUE_OEUVRE, oeuvre.getEpoque());
+        values.put(KEY_UPDATEAT_OEUVRE, oeuvre.getUpdatedAt());
         // insert() retourne l'id du nouvel enregistrement inséré, ou -1 en cas d'erreur
         return db.insert(TABLE_NAME,null,values);
     }
@@ -82,9 +82,8 @@ public class OeuvreManager {
         Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+KEY_ID_OEUVRE+"="+id, null);
         if (c.moveToFirst()) {
             oeuvre.setId(c.getString(c.getColumnIndex(KEY_ID_OEUVRE)));
-            oeuvre.setNom(c.getString(c.getColumnIndex(KEY_NOM_OEUVRE)));
+            oeuvre.setName(c.getString(c.getColumnIndex(KEY_NOM_OEUVRE)));
             oeuvre.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION_OEUVRE)));
-            oeuvre.setEpoque(c.getString(c.getColumnIndex(KEY_EPOQUE_OEUVRE)));
             c.close();
         }
         return oeuvre;
@@ -94,6 +93,15 @@ public class OeuvreManager {
         // sélection de tous les enregistrements de la table
         return db.rawQuery("SELECT * FROM "+TABLE_NAME, null);
     }
-
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        // Création de la base de données
+        System.out.println(sqLiteDatabase);
+        sqLiteDatabase.execSQL(CREATE_TABLE_OEUVRE); // création table "oeuvre"
+    }
+    public void onDrop(SQLiteDatabase sqLiteDatabase) {
+        // Suppression de la base de données
+        System.out.println(sqLiteDatabase);
+        sqLiteDatabase.execSQL(DROP_TABLE_OEUVRE); // création table "oeuvre"
+    }
 
 }

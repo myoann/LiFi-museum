@@ -31,6 +31,7 @@ public class MySQLite extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(OeuvreManager.CREATE_TABLE_OEUVRE); // création table "oeuvre"
     }
 
+
     public void onDrop(SQLiteDatabase sqLiteDatabase) {
         // Suppression de la base de données
         System.out.println(sqLiteDatabase);
