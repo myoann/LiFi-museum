@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.widget.ImageView;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
@@ -59,6 +60,19 @@ public class ConnectServer {
         public String id;
         public String lifi;
         public Oeuvre(){
+
+        }
+        public Oeuvre(String name, String description, String id) {
+            this.name = name;
+            this.description = description;
+            this.id = id;
+            //a voir pour les images
+        }
+
+        public Oeuvre(String name, String id) {
+            this.name = name;
+            this.id = id;
+            //a voir pour les images
         }
         public String getLifi() {return lifi;}
         public void setLifi(String lifi) {this.lifi = lifi;}
@@ -99,8 +113,9 @@ public class ConnectServer {
             @Override
             public void callback(String url, Bitmap bmp, AjaxStatus status) {
                 try {
-                    String directory = saveToInternalStorage(bmp, aq, url);
-                    loadImageFromStorage(directory,url);
+                    ImageDirectoryManager idm = new ImageDirectoryManager(aq.getContext());
+                    String directory = idm.saveToInternalStorage(bmp, url);
+                    idm.loadImageFromStorage(url);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -109,52 +124,6 @@ public class ConnectServer {
         aq.ajax(url, Bitmap.class, 0, cb);
     }
 
-    private String saveToInternalStorage(Bitmap bitmapImage,AQuery aq, String urlImage) throws IOException {
-        ContextWrapper cw = new ContextWrapper(aq.getContext());
-        // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
-        int pos = urlImage.lastIndexOf("/");
-        String nameImage = urlImage.substring(pos+1);
-        System.out.println("nameImage WRITE ====="+nameImage);
-        File mypath = new File(directory,nameImage);
-
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(mypath);
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            fos.close();
-        }
-        System.out.println("WRITE ====" + directory.getAbsolutePath());
-        return directory.getAbsolutePath();
-    }
-
-    private void loadImageFromStorage(String directory, String urlImage)
-    {
-        int pos = urlImage.lastIndexOf("/");
-        String nameImage = urlImage.substring(pos+1);
-        try {
-
-//            ContextWrapper cw = new ContextWrapper(aq.getContext());
-            // path to /data/data/yourapp/app_data/imageDir
-//            File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-            System.out.println("PATH READ ====="+directory+"/"+nameImage);
-            File f = new File(directory,nameImage);
-            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-            System.out.println("BITMAP READ ==="+b);
-//            ImageView img=(ImageView)findViewById(R.id.imgPicker);
-//            img.setImageBitmap(b);
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-
-    }
     public List<Oeuvre> getOeuvres() {
         return oeuvres;
     }

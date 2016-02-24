@@ -79,10 +79,10 @@ public class OeuvreManager {
 //        return db.delete(TABLE_NAME, where, whereArgs);
 //    }
 
-    public ConnectServer.Oeuvre getOeuvre(int id) {
+    public ConnectServer.Oeuvre getOeuvre(String id) {
         // Retourne l'animal dont l'id est passé en paramètre
         ConnectServer.Oeuvre oeuvre = new ConnectServer.Oeuvre();
-        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+KEY_ID_OEUVRE+"="+id, null);
+        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+KEY_ID_OEUVRE+"='"+id+"'", null);
         if (c.moveToFirst()) {
             oeuvre.setId(c.getString(c.getColumnIndex(KEY_ID_OEUVRE)));
             oeuvre.setName(c.getString(c.getColumnIndex(KEY_NOM_OEUVRE)));
