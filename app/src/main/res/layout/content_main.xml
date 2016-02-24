@@ -47,24 +47,19 @@
             android:gravity="center_horizontal">
 
             <Button
-                style="?android:attr/buttonStyleSmall"
+                style="@style/BoutonValidation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Démarrer l&apos;expérience"
-                android:id="@+id/button_acces_lifi"
-                android:background="@color/colorPrimaryDark"
-                android:textColor="@color/colorButton"
-                android:padding="15dp" />
+                android:id="@+id/button_acces_lifi" />
 
             <Button
-                style="?android:attr/buttonStyleSmall"
+                style="@style/BoutonValidationMarginLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="oeuvres"
                 android:id="@+id/liste_oeuvre"
                 android:background="@color/colorPrimaryDark"
-                android:textColor="@color/colorButton"
-                android:layout_marginLeft="15dp"
                 android:padding="15dp" />
         </LinearLayout>
 
