@@ -4,6 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 /**
  * Created by Fabrice on 22/02/2016.
@@ -18,8 +21,8 @@ public class ImageManager {
             " (" +
             " "+KEY_ID+" INTEGER primary key autoincrement," +
             " "+KEY_URL_IMAGE+" TEXT,"+
-            " "+KEY_FOREIGNKEY_OEUVRE_IMAGE+" INTEGER,"+
-            " "+"FOREIGN KEY("+KEY_FOREIGNKEY_OEUVRE_IMAGE+") REFERENCES "+OeuvreManager.TABLE_NAME+"("+OeuvreManager.KEY_ID+")"+
+            " "+KEY_FOREIGNKEY_OEUVRE_IMAGE+" TEXT,"+
+            " "+"FOREIGN KEY("+KEY_FOREIGNKEY_OEUVRE_IMAGE+") REFERENCES "+OeuvreManager.TABLE_NAME+"("+OeuvreManager.KEY_ID_OEUVRE+")"+
             ");";
     private MySQLite maBaseSQLite; // notre gestionnaire du fichier SQLite
     private SQLiteDatabase db;
@@ -66,9 +69,34 @@ public class ImageManager {
         // sélection de tous les enregistrements de la table
         return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
+
+    public ArrayList<ConnectServer.Image> getListImages(String id) {
+        // Retourne l'animal dont l'id est passé en paramètre
+        System.out.println("id element =="+ "SELECT * FROM "+TABLE_NAME+" WHERE "+KEY_FOREIGNKEY_OEUVRE_IMAGE+"='"+id+"'");
+
+        ArrayList<ConnectServer.Image> listImages = new ArrayList<ConnectServer.Image>();
+        System.out.println("db ======="+db);
+        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+KEY_FOREIGNKEY_OEUVRE_IMAGE+"='"+id+"'", null);
+
+        if (c.moveToFirst()) {
+            do {
+                ConnectServer.Image image = new ConnectServer.Image();
+                String urlImage = c.getString(c.getColumnIndex(ImageManager.KEY_URL_IMAGE));
+                System.out.println("URL IMAGE ==== "+urlImage);
+                image.setUrl(urlImage);
+                listImages.add(image);
+            }
+            while (c.moveToNext());
+            //image.setUrl(c.getString(c.getColumnIndex(KEY_URL_IMAGE)));
+            c.close();
+        }
+        return listImages;
+    }
+
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         // Création de la base de données
         System.out.println(sqLiteDatabase);
+        System.out.println("CREATE_TABLE_IMAGE ==============="+CREATE_TABLE_IMAGE);
         sqLiteDatabase.execSQL(CREATE_TABLE_IMAGE); // création table "oeuvre"
     }
     public void onDrop(SQLiteDatabase sqLiteDatabase) {
