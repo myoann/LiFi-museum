@@ -3,8 +3,14 @@ package lifi.lifi_museum;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import android.content.Context;
+import android.content.Intent;
 import android.os.Message;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.luciom.opticallbs.*;
 
 /**
@@ -12,11 +18,14 @@ import com.luciom.opticallbs.*;
  */
 public class SmartLightHandler extends SmartLightHandlerAbs {
     private TextView id_filtered, message;
-    public SmartLightHandler(TextView id_filtered, TextView message) {
+    private LifiActivity lifi_activity;
+    public SmartLightHandler(TextView id_filtered, TextView message, LifiActivity lifi_activity) {
         super();
         this.id_filtered = id_filtered;
         this.message = message;
+        this.lifi_activity = lifi_activity;
     }
+
     @Override
     public void handleMessage(Message msg) {
         super.handleMessage(msg);
@@ -56,7 +65,7 @@ public class SmartLightHandler extends SmartLightHandlerAbs {
         }
         else if(msg.what==MsgWhat.FILTERED_UID.value) {
             if(msg.obj instanceof byte[]) {
-                id_filtered_data = "FILTERED_ID=";
+                id_filtered_data = "";
                 byte[] filtered_id = (byte[])msg.obj;
                 for(int i=0; i<filtered_id.length; i++) {
                     id_filtered_data += String.format("%02X", filtered_id[i]);
@@ -64,19 +73,24 @@ public class SmartLightHandler extends SmartLightHandlerAbs {
             }
         }
         else if(msg.what==MsgWhat.DEAD.value) {
-            id_filtered_data = "DEAD";
+            id_filtered_data = "RECHERCHE EN COURS ...";
             message_data = ".";
         }
         else if(msg.what==MsgWhat.START_LBS.value) {
-            id_filtered_data = "START";
+            id_filtered_data = "LIFI ACTIVÉ";
             message_data = ".";
         }
         else if(msg.what==MsgWhat.STOP_LBS.value) {
-            id_filtered_data = "STOP";
+            id_filtered_data = "LIFI ARRÊTÉ";
             message_data = ".";
         }
         if(!id_filtered_data.equals("")) {
             id_filtered.setText(id_filtered_data);
+            if(!id_filtered_data.equals("LIFI ACTIVÉ") && !id_filtered_data.equals("LIFI ARRÊTÉ") && !id_filtered_data.equals("RECHERCHE EN COURS ...")) {
+                final Intent redirectIntent = new Intent(lifi_activity, DetailsActivity.class);
+                redirectIntent.putExtra("id_LIFI", id_filtered_data);
+                lifi_activity.startActivity(redirectIntent);
+            }
         }
         if(!message_data.equals("")) {
             message.setText(message_data);

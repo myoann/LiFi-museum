@@ -31,24 +31,29 @@ public class DetailsActivity extends AppCompatActivity implements ResultCallBack
 
         // getIntent() is a method from the started activity
         Intent redirectIntent = getIntent(); // gets the previously created intent
-       // String positionElement = redirectIntent.getStringExtra("position");
-        String idElement = redirectIntent.getStringExtra("id");
+        ConnectServer.Oeuvre value = new ConnectServer.Oeuvre();
+        value.setName("");
+        value.setDescription("");
+        value.setImages(new ArrayList<ConnectServer.Image>());
+        if (redirectIntent.getStringExtra("id") != null && redirectIntent.getStringExtra("id") != "") {
+            String idElement = redirectIntent.getStringExtra("id");
+            value = this.recupererOeuvre(idElement, false);
+        } else if (redirectIntent.getStringExtra("id_LIFI") != null && redirectIntent.getStringExtra("id_LIFI") != ""){
+            String idElement = redirectIntent.getStringExtra("id_LIFI");
+            value = this.recupererOeuvre(idElement, true);
+        }
 
-        setTitle(idElement);
 
-        ConnectServer.Oeuvre value = this.recupererOeuvre(idElement);
 
         setTitle(value.getName());
 //
         TextView t=(TextView)findViewById(R.id.descriptionContent);
         t.setText(value.getDescription());
 
-//        Log.d("LOLO", value.getImages().get(0).getUrl());
-        ImageView i = (ImageView)findViewById(R.id.imageContent);
+        /*ImageView i = (ImageView)findViewById(R.id.imageContent);
         ImageDirectoryManager idm = new ImageDirectoryManager(this);
         Bitmap bpm = idm.loadImageFromStorage(value.getImages().get(0).getUrl());
-        i.setImageBitmap(bpm);
-        //i.setImageResource(value.getImages().get(0).getUrl());
+        i.setImageBitmap(bpm);*/
 
         server = ConnectServer.getInstance();
         server.get_oeuvres(aq, this);
@@ -58,15 +63,22 @@ public class DetailsActivity extends AppCompatActivity implements ResultCallBack
 
     }
 
-    public ConnectServer.Oeuvre recupererOeuvre(String idElement){
+    public ConnectServer.Oeuvre recupererOeuvre(String idElement, boolean isLIFI){
         ConnectServer.Oeuvre oeuvre = new ConnectServer.Oeuvre();
         OeuvreManager oeuvreManager = new OeuvreManager(this); // gestionnaire de la table "oeuvre"
         oeuvreManager.open(); // ouverture de la table en lecture/écriture
-        oeuvre = oeuvreManager.getOeuvre(idElement);
+        if (isLIFI) {
+            oeuvre = oeuvreManager.getOeuvreByIdLIFI(idElement);
+        } else {
+            oeuvre = oeuvreManager.getOeuvre(idElement);
+        }
+        String idUniversel = oeuvre.getId();
         ImageManager imageManager = new ImageManager(this);
         imageManager.open(); // ouverture de la table en lecture/écriture
-        ArrayList<ConnectServer.Image> images = imageManager.getListImages(idElement);
-        oeuvre.setImages(images);
+        if (imageManager.getListImages(idUniversel).size() > 0) {
+            ArrayList<ConnectServer.Image> images = imageManager.getListImages(idUniversel);
+            oeuvre.setImages(images);
+        }
         imageManager.close();
         oeuvreManager.close();
         return oeuvre;

@@ -1,8 +1,10 @@
 package lifi.lifi_museum;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.luciom.opticallbs.SmartLightRunnable;
@@ -17,10 +19,13 @@ public class LifiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lifi);
         mHandler = new SmartLightHandler((TextView)findViewById(R.id.id_filteredTxtView),
-                (TextView)findViewById(R.id.msgTxtView));
+                (TextView)findViewById(R.id.msgTxtView), this);
         smartLight = new SmartLightRunnable(mHandler, getApplicationContext());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        TextView messageTV = (TextView)findViewById(R.id.id_filteredTxtView);
+        String message = messageTV.getText().toString();
 
         // Add the Up Action
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

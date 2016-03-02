@@ -92,6 +92,19 @@ public class OeuvreManager {
         return oeuvre;
     }
 
+    public ConnectServer.Oeuvre getOeuvreByIdLIFI(String id_LIFI) {
+        // Retourne l'animal dont l'id est passé en paramètre
+        ConnectServer.Oeuvre oeuvre = new ConnectServer.Oeuvre();
+        Cursor c = db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+KEY_LIFI_OEUVRE+"='"+id_LIFI+"'", null);
+        if (c.moveToFirst()) {
+            oeuvre.setId(c.getString(c.getColumnIndex(KEY_ID_OEUVRE)));
+            oeuvre.setName(c.getString(c.getColumnIndex(KEY_NOM_OEUVRE)));
+            oeuvre.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION_OEUVRE)));
+            c.close();
+        }
+        return oeuvre;
+    }
+
     public Cursor getOeuvres() {
         // sélection de tous les enregistrements de la table
         return db.rawQuery("SELECT * FROM "+TABLE_NAME, null);
