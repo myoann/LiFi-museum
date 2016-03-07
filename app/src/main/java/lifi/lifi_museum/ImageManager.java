@@ -93,6 +93,7 @@ public class ImageManager {
         return listImages;
     }
 
+
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         // Création de la base de données
         System.out.println(sqLiteDatabase);

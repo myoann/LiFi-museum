@@ -46,14 +46,18 @@ public class DetailsActivity extends AppCompatActivity implements ResultCallBack
 
 
         setTitle(value.getName());
-//
+
         TextView t=(TextView)findViewById(R.id.descriptionContent);
         t.setText(value.getDescription());
 
-        /*ImageView i = (ImageView)findViewById(R.id.imageContent);
-        ImageDirectoryManager idm = new ImageDirectoryManager(this);
-        Bitmap bpm = idm.loadImageFromStorage(value.getImages().get(0).getUrl());
-        i.setImageBitmap(bpm);*/
+        ImageView i = (ImageView)findViewById(R.id.imageContent);
+
+        if( value.getImages().size()>0 && value.getImages().get(0).getUrl() != ""){
+            System.out.println("DANS DETAILS ACTIVITY IMAGE ============"+value.getImages().get(0).getUrl());
+            ImageDirectoryManager idm = new ImageDirectoryManager(this);
+            Bitmap bpm = idm.loadImageFromStorage(value.getImages().get(0).getUrl());
+            i.setImageBitmap(bpm);
+        }
 
         server = ConnectServer.getInstance();
         server.get_oeuvres(aq, this);
