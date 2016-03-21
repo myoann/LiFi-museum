@@ -16,6 +16,8 @@ public class OeuvreManager {
     public static final String KEY_DESCRIPTION_OEUVRE="description_oeuvre";
     public static final String KEY_UPDATEAT_OEUVRE="updatedAt_oeuvre";
     public static final String KEY_LIFI_OEUVRE="lifi_oeuvre";
+    public static final String KEY_VIDEO_OEUVRE="video_oeuvre";
+    public static final String KEY_AUDIO_OEUVRE="audio_oeuvre";
     public static final String DROP_TABLE_OEUVRE = "DROP TABLE IF EXISTS oeuvre;";
     public static final String CREATE_TABLE_OEUVRE = "CREATE TABLE IF NOT EXISTS "+TABLE_NAME+
             " (" +
@@ -24,6 +26,8 @@ public class OeuvreManager {
             " "+KEY_NOM_OEUVRE+" TEXT," +
             " "+KEY_DESCRIPTION_OEUVRE+" TEXT," +
             " "+KEY_LIFI_OEUVRE+" TEXT," +
+            " "+KEY_VIDEO_OEUVRE+" TEXT," +
+            " "+KEY_AUDIO_OEUVRE+" TEXT," +
             " "+KEY_UPDATEAT_OEUVRE+" TEXT" +
             ");";
     private MySQLite maBaseSQLite; // notre gestionnaire du fichier SQLite
@@ -57,6 +61,12 @@ public class OeuvreManager {
         values.put(KEY_DESCRIPTION_OEUVRE, oeuvre.getDescription());
         values.put(KEY_UPDATEAT_OEUVRE, oeuvre.getUpdatedAt());
         values.put(KEY_LIFI_OEUVRE, oeuvre.getLifi());
+        if(oeuvre.getVideo() != null) {
+            values.put(KEY_VIDEO_OEUVRE, oeuvre.getVideo().getUrl());
+        }
+        if(oeuvre.getAudio() != null) {
+            values.put(KEY_AUDIO_OEUVRE, oeuvre.getAudio().getUrl());
+        }
         // insert() retourne l'id du nouvel enregistrement inséré, ou -1 en cas d'erreur
         return db.insert(TABLE_NAME,null,values);
     }
@@ -87,6 +97,12 @@ public class OeuvreManager {
             oeuvre.setId(c.getString(c.getColumnIndex(KEY_ID_OEUVRE)));
             oeuvre.setName(c.getString(c.getColumnIndex(KEY_NOM_OEUVRE)));
             oeuvre.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION_OEUVRE)));
+            ConnectServer.Video v = new ConnectServer.Video();
+            v.setUrl(c.getString(c.getColumnIndex(KEY_VIDEO_OEUVRE)));
+            oeuvre.setVideo(v);
+            ConnectServer.Audio a = new ConnectServer.Audio();
+            a.setUrl(c.getString(c.getColumnIndex(KEY_AUDIO_OEUVRE)));
+            oeuvre.setAudio(a);
             c.close();
         }
         return oeuvre;
@@ -100,6 +116,12 @@ public class OeuvreManager {
             oeuvre.setId(c.getString(c.getColumnIndex(KEY_ID_OEUVRE)));
             oeuvre.setName(c.getString(c.getColumnIndex(KEY_NOM_OEUVRE)));
             oeuvre.setDescription(c.getString(c.getColumnIndex(KEY_DESCRIPTION_OEUVRE)));
+            ConnectServer.Video v = new ConnectServer.Video();
+            v.setUrl(c.getString(c.getColumnIndex(KEY_VIDEO_OEUVRE)));
+            oeuvre.setVideo(v);
+            ConnectServer.Audio a = new ConnectServer.Audio();
+            a.setUrl(c.getString(c.getColumnIndex(KEY_AUDIO_OEUVRE)));
+            oeuvre.setAudio(a);
             c.close();
         }
         return oeuvre;
