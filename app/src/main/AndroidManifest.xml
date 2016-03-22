@@ -105,7 +105,10 @@
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain"  />
-                <!--<meta-data android:name="android.nfc.action.TECH_DISCOVERED" android:resource="@xml/nfc_tech_filter" />-->
+                <meta-data android:name="android.nfc.action.NDEF_DISCOVERED" android:resource="@xml/nfc_tech_filter" />
+
+                <!--<data android:scheme="http" android:host="http://134.59.152.117:1337/images/uploads/8eba5128-d4b9-4988-a8bd-96e052d35f68.jpg"/>-->
+
                 <!--<data-->
                     <!--android:host="www.mbds-fr.org"-->
                     <!--android:scheme="http" />-->
