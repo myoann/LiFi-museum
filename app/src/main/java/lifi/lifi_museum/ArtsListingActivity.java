@@ -1,11 +1,7 @@
 package lifi.lifi_museum;
 
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,17 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class ArtsListingActivity extends AppCompatActivity implements ResultCallBack {
@@ -129,11 +119,17 @@ public class ArtsListingActivity extends AppCompatActivity implements ResultCall
         Cursor cursorOeuvre = oeuvreManager.getOeuvres();
         Cursor cursorImage = imageManager.getImages();
         if (cursorOeuvre.moveToFirst()) {
+            String urlVideo = cursorImage.getString(cursorImage.getColumnIndex(OeuvreManager.KEY_VIDEO_OEUVRE));
+            server.get_videos(aq, this, urlVideo);
+            String urlAudio = cursorImage.getString(cursorImage.getColumnIndex(OeuvreManager.KEY_AUDIO_OEUVRE));
+            server.get_audios(aq, this, urlAudio);
             do {
                 Log.d("OEUVRE",
                         cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_ID_OEUVRE)) + ",\n" +
                         cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_NOM_OEUVRE)) + "\n" +
                         cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_LIFI_OEUVRE)) + "\n"+
+                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_VIDEO_OEUVRE)) + "\n"+
+                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_AUDIO_OEUVRE)) + "\n"+
                         cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_DESCRIPTION_OEUVRE)) + "\n" +
                         cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_UPDATEAT_OEUVRE)) + ""
                 );

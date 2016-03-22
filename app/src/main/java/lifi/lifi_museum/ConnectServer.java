@@ -1,24 +1,16 @@
 package lifi.lifi_museum;
 
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.widget.ImageView;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
-import com.androidquery.callback.Transformer;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +44,20 @@ public class ConnectServer {
         public String getUrl(){return this.url;}
         public void setUrl(String url){this.url = url;}
     }
+    public static class Video {
+        public String url;
+        public Video(){
+        }
+        public String getUrl(){return this.url;}
+        public void setUrl(String url){this.url = url;}
+    }
+    public static class Audio {
+        public String url;
+        public Audio(){
+        }
+        public String getUrl(){return this.url;}
+        public void setUrl(String url){this.url = url;}
+    }
     public static class Oeuvre {
         public String name;
         public String description;
@@ -59,6 +65,8 @@ public class ConnectServer {
         public String updatedAt;
         public String id;
         public String lifi;
+        public Video video;
+        public Audio audio;
         public Oeuvre(){
 
         }
@@ -76,6 +84,10 @@ public class ConnectServer {
         }
         public String getLifi() {return lifi;}
         public void setLifi(String lifi) {this.lifi = lifi;}
+        public Video getVideo() {return video;}
+        public void setVideo(Video video) {this.video = video;}
+        public Audio getAudio() {return audio;}
+        public void setAudio(Audio audio) {this.audio = audio;}
         public String getUpdatedAt() {return updatedAt;}
         public void setUpdatedAt(String updatedAt) {this.updatedAt = updatedAt;}
         public String getName() {return name;}
@@ -124,6 +136,43 @@ public class ConnectServer {
         aq.ajax(url, Bitmap.class, 0, cb);
     }
 
+    public void get_videos(final AQuery aq, final ResultCallBack listener, String urlVideo){
+        //        String url = "http://134.59.152.117:1337/images/uploads/nomimage.jpg";
+        String url = "http://134.59.152.117:1337/videos/uploads/"+urlVideo;
+
+        final AjaxCallback<File> cb = new AjaxCallback<File>() {
+            @Override
+            public void callback(String url, File file, AjaxStatus status) {
+                try {
+                    VideoDirectoryManager vdm = new VideoDirectoryManager(aq.getContext());
+                    String directory = vdm.saveToInternalStorage(file, url);
+                    vdm.loadImageFromStorage(url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        aq.ajax(url, File.class, 0, cb);
+    }
+
+    public void get_audios(final AQuery aq, final ResultCallBack listener, String urlAudio){
+        //        String url = "http://134.59.152.117:1337/images/uploads/nomimage.jpg";
+        String url = "http://134.59.152.117:1337/audios/uploads/"+urlAudio;
+
+        final AjaxCallback<File> cb = new AjaxCallback<File>() {
+            @Override
+            public void callback(String url, File file, AjaxStatus status) {
+                try {
+                    AudioDirectoryManager adm = new AudioDirectoryManager(aq.getContext());
+                    String directory = adm.saveToInternalStorage(file, url);
+                    adm.loadImageFromStorage(url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        aq.ajax(url, File.class, 0, cb);
+    }
     public List<Oeuvre> getOeuvres() {
         return oeuvres;
     }

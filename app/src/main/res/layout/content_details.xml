@@ -31,6 +31,14 @@
             android:layout_marginRight="@dimen/text_margin"
             android:layout_centerHorizontal="true" />
 
+        <VideoView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/videoView"
+            android:layout_below="@id/descriptionContent"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>
