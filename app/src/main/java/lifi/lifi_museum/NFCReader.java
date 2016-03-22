@@ -127,7 +127,6 @@ public class NFCReader extends AppCompatActivity {
         if (rawMsgs != null) {
             try {
                 msgs = new NdefMessage[rawMsgs.length];
-                System.out.println();
                 for (int i = 0; i < rawMsgs.length; i++) {
                     msgs[i] = (NdefMessage) rawMsgs[i];
                     NdefRecord record = msgs[i].getRecords()[i];
@@ -148,11 +147,19 @@ public class NFCReader extends AppCompatActivity {
                             Arrays.equals(type, NdefRecord.RTD_URI) ||
                             Arrays.equals(type, NdefRecord.RTD_TEXT)) {
                         Uri uri = record.toUri();
+                        System.out.println("URI");
+                        System.out.println(uri);
+                        System.out.println("FIN URI");
                         receivedMessages += uri.toString().replace(DOMAIN,"")+" ";
                     }
                     isNdefMsgFound = true;
                 }
             } catch (Exception e) {
+                System.out.println("======================================================");
+
+                System.out.println(e);
+                System.out.println("lll======================================================");
+
                 Toast.makeText(this, "NDEF type not managed!..",
                         Toast.LENGTH_SHORT).show();
             }
