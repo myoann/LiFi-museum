@@ -49,8 +49,6 @@ public class DetailsActivity extends AppCompatActivity implements ResultCallBack
             value = this.recupererOeuvre(idElement, true);
         }
 
-
-
         setTitle(value.getName());
 
         TextView t=(TextView)findViewById(R.id.descriptionContent);
@@ -75,7 +73,7 @@ public class DetailsActivity extends AppCompatActivity implements ResultCallBack
                 VideoDirectoryManager vdm = new VideoDirectoryManager(this);
                 File f = vdm.loadImageFromStorage(value.getVideo().getUrl());
                 Log.d("Vidéo", "" + f);
-                
+
                 VideoView videoView = (VideoView) findViewById(R.id.videoView);
                 MediaController mediaController = new MediaController(this);
                 mediaController.setAnchorView(videoView);

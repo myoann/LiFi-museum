@@ -112,16 +112,18 @@ public class ArtsListingActivity extends AppCompatActivity implements ResultCall
         System.out.println("------------------------------ LES OEUVRES ------------------------------");
         for (int i =0;i<server.getOeuvres().size();i++){
             oeuvreManager.addOeuvre(server.getOeuvres().get(i));
-            for(int j=0;j<server.getOeuvres().get(i).getImages().size();j++){
-                imageManager.addImage(server.getOeuvres().get(i).getImages().get(j), server.getOeuvres().get(i).getId());
+            if(server.getOeuvres().get(i).getImages() != null) {
+                for(int j=0;j<server.getOeuvres().get(i).getImages().size();j++){
+                    imageManager.addImage(server.getOeuvres().get(i).getImages().get(j), server.getOeuvres().get(i).getId());
+                }
             }
         }
         Cursor cursorOeuvre = oeuvreManager.getOeuvres();
         Cursor cursorImage = imageManager.getImages();
         if (cursorOeuvre.moveToFirst()) {
-            String urlVideo = cursorImage.getString(cursorImage.getColumnIndex(OeuvreManager.KEY_VIDEO_OEUVRE));
+            String urlVideo = cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_VIDEO_OEUVRE));
             server.get_videos(aq, this, urlVideo);
-            String urlAudio = cursorImage.getString(cursorImage.getColumnIndex(OeuvreManager.KEY_AUDIO_OEUVRE));
+            String urlAudio = cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_AUDIO_OEUVRE));
             server.get_audios(aq, this, urlAudio);
             do {
                 Log.d("OEUVRE",
