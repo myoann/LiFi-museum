@@ -20,10 +20,14 @@ public class ImageDirectoryManager {
     public ImageDirectoryManager() {
     }
     Context context;
+    ResultCallBack listener;
+    public ImageDirectoryManager(Context context,ResultCallBack listener) {
+        this.context = context;
+        this.listener = listener;
+    }
     public ImageDirectoryManager(Context context) {
         this.context = context;
     }
-
     public String saveToInternalStorage(Bitmap bitmapImage, String urlImage) throws IOException {
         ContextWrapper cw = new ContextWrapper(this.context);
         // path to /data/data/yourapp/app_data/imageDir
@@ -31,7 +35,7 @@ public class ImageDirectoryManager {
         // Create imageDir
         int pos = urlImage.lastIndexOf("/");
         String nameImage = urlImage.substring(pos+1);
-        System.out.println("nameImage WRITE ====="+nameImage);
+        System.out.println("WRITE IMAGE ====="+nameImage);
         File mypath = new File(directory,nameImage);
 
         FileOutputStream fos = null;
@@ -43,8 +47,8 @@ public class ImageDirectoryManager {
             e.printStackTrace();
         } finally {
             fos.close();
+            listener.DataSaveInSQLiteCallBack();
         }
-        System.out.println("WRITE ====" + directory.getAbsolutePath());
         return directory.getAbsolutePath();
     }
 
@@ -61,8 +65,6 @@ public class ImageDirectoryManager {
             System.out.println("PATH READ ====="+directory+"/"+nameImage);
             File f = new File(directory,nameImage);
             b = BitmapFactory.decodeStream(new FileInputStream(f));
-            System.out.println("BITMAP READ ==="+b);
-
 //            ImageView img=(ImageView)findViewById(R.id.imgPicker);
 //            img.setImageBitmap(b);
         }

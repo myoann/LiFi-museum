@@ -15,6 +15,11 @@ public class VideoDirectoryManager {
     public VideoDirectoryManager() {
     }
     Context context;
+    ResultCallBack listener;
+    public VideoDirectoryManager(Context context,ResultCallBack listener) {
+        this.context = context;
+        this.listener = listener;
+    }
     public VideoDirectoryManager(Context context) {
         this.context = context;
     }
@@ -26,7 +31,7 @@ public class VideoDirectoryManager {
         // Create imageDir
         int pos = urlVideo.lastIndexOf("/");
         String nameVideo = urlVideo.substring(pos+1);
-        System.out.println("nameVideo WRITE ====="+nameVideo);
+        System.out.println("WRITE VIDEO ====" + directory.getAbsolutePath());
         File mypath = new File(directory,nameVideo);
 
         FileOutputStream fos = null;
@@ -45,8 +50,8 @@ public class VideoDirectoryManager {
             e.printStackTrace();
         } finally {
             fos.close();
+            listener.DataSaveInSQLiteCallBack();
         }
-        System.out.println("WRITE VIDEO ====" + directory.getAbsolutePath());
         return directory.getAbsolutePath();
     }
 

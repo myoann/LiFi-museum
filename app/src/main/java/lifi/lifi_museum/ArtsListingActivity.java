@@ -16,7 +16,7 @@ import com.androidquery.AQuery;
 
 import java.util.ArrayList;
 
-public class ArtsListingActivity extends AppCompatActivity implements ResultCallBack {
+public class ArtsListingActivity extends AppCompatActivity {
     ListView listView ;
     ConnectServer server;
     AQuery aq = new AQuery(this);
@@ -73,8 +73,8 @@ public class ArtsListingActivity extends AppCompatActivity implements ResultCall
             }
 
         });
-        server = ConnectServer.getInstance();
-        server.get_oeuvres(aq, this);
+//        server = ConnectServer.getInstance();
+//        server.get_oeuvres(aq, this);
         // Add the Up Action
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -98,60 +98,65 @@ public class ArtsListingActivity extends AppCompatActivity implements ResultCall
         return listOeuvre;
     }
 
-    @Override
-    public void ResultCallBack() {
-
-        OeuvreManager oeuvreManager = new OeuvreManager(this); // gestionnaire de la table "oeuvre"
-        ImageManager imageManager = new ImageManager(this); // gestionnaire de la table "oeuvre"
-        oeuvreManager.open(); // ouverture de la table en lecture/écriture
-        imageManager.open();
-        oeuvreManager.dropTableOeuvre();
-        imageManager.dropTableImage();
-        oeuvreManager.createTableOeuvre();
-        imageManager.createTableImage();
-        System.out.println("------------------------------ LES OEUVRES ------------------------------");
-        for (int i =0;i<server.getOeuvres().size();i++){
-            oeuvreManager.addOeuvre(server.getOeuvres().get(i));
-            if(server.getOeuvres().get(i).getImages() != null) {
-                for(int j=0;j<server.getOeuvres().get(i).getImages().size();j++){
-                    imageManager.addImage(server.getOeuvres().get(i).getImages().get(j), server.getOeuvres().get(i).getId());
-                }
-            }
-        }
-        Cursor cursorOeuvre = oeuvreManager.getOeuvres();
-        Cursor cursorImage = imageManager.getImages();
-        if (cursorOeuvre.moveToFirst()) {
-            String urlVideo = cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_VIDEO_OEUVRE));
-            server.get_videos(aq, this, urlVideo);
-            String urlAudio = cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_AUDIO_OEUVRE));
-            server.get_audios(aq, this, urlAudio);
-            do {
-                Log.d("OEUVRE",
-                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_ID_OEUVRE)) + ",\n" +
-                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_NOM_OEUVRE)) + "\n" +
-                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_LIFI_OEUVRE)) + "\n"+
-                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_VIDEO_OEUVRE)) + "\n"+
-                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_AUDIO_OEUVRE)) + "\n"+
-                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_DESCRIPTION_OEUVRE)) + "\n" +
-                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_UPDATEAT_OEUVRE)) + ""
-                );
-            }
-            while (cursorOeuvre.moveToNext());
-        }
-        if (cursorImage.moveToFirst()) {
-            do {
-                String urlImage = cursorImage.getString(cursorImage.getColumnIndex(ImageManager.KEY_URL_IMAGE));
-                server.get_images(aq, this, urlImage);
-            }
-            while (cursorImage.moveToNext());
-        }
-
-        cursorImage.close();
-        cursorOeuvre.close(); // fermeture du curseur
-        // fermeture du gestionnaire
-        oeuvreManager.close();
-        imageManager.close();
-    }
+//    @Override
+//    public void ResultCallBack() {
+//
+//        OeuvreManager oeuvreManager = new OeuvreManager(this); // gestionnaire de la table "oeuvre"
+//        ImageManager imageManager = new ImageManager(this); // gestionnaire de la table "oeuvre"
+//        oeuvreManager.open(); // ouverture de la table en lecture/écriture
+//        imageManager.open();
+//        oeuvreManager.dropTableOeuvre();
+//        imageManager.dropTableImage();
+//        oeuvreManager.createTableOeuvre();
+//        imageManager.createTableImage();
+//        System.out.println("------------------------------ LES OEUVRES ------------------------------");
+//        for (int i =0;i<server.getOeuvres().size();i++){
+//            oeuvreManager.addOeuvre(server.getOeuvres().get(i));
+//            if(server.getOeuvres().get(i).getImages() != null) {
+//                for(int j=0;j<server.getOeuvres().get(i).getImages().size();j++){
+//                    imageManager.addImage(server.getOeuvres().get(i).getImages().get(j), server.getOeuvres().get(i).getId());
+//                }
+//            }
+//        }
+//        Cursor cursorOeuvre = oeuvreManager.getOeuvres();
+//        Cursor cursorImage = imageManager.getImages();
+//        if (cursorOeuvre.moveToFirst()) {
+//            String urlVideo = cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_VIDEO_OEUVRE));
+//            server.get_videos(aq, this, urlVideo);
+//            String urlAudio = cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_AUDIO_OEUVRE));
+//            server.get_audios(aq, this, urlAudio);
+//            do {
+//                Log.d("OEUVRE",
+//                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_ID_OEUVRE)) + ",\n" +
+//                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_NOM_OEUVRE)) + "\n" +
+//                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_LIFI_OEUVRE)) + "\n"+
+//                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_VIDEO_OEUVRE)) + "\n"+
+//                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_AUDIO_OEUVRE)) + "\n"+
+//                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_DESCRIPTION_OEUVRE)) + "\n" +
+//                        cursorOeuvre.getString(cursorOeuvre.getColumnIndex(OeuvreManager.KEY_UPDATEAT_OEUVRE)) + ""
+//                );
+//            }
+//            while (cursorOeuvre.moveToNext());
+//        }
+//        if (cursorImage.moveToFirst()) {
+//            do {
+//                String urlImage = cursorImage.getString(cursorImage.getColumnIndex(ImageManager.KEY_URL_IMAGE));
+//                server.get_images(aq, this, urlImage);
+//            }
+//            while (cursorImage.moveToNext());
+//        }
+//
+//        cursorImage.close();
+//        cursorOeuvre.close(); // fermeture du curseur
+//        // fermeture du gestionnaire
+//        oeuvreManager.close();
+//        imageManager.close();
+//    }
+//
+//    @Override
+//    public void DataSaveInSQLiteCallBack() {
+//
+//    }
 //    @Override
 //    public void ResultCallBackImage(){
 //

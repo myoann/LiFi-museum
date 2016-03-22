@@ -125,9 +125,9 @@ public class ConnectServer {
             @Override
             public void callback(String url, Bitmap bmp, AjaxStatus status) {
                 try {
-                    ImageDirectoryManager idm = new ImageDirectoryManager(aq.getContext());
+                    ImageDirectoryManager idm = new ImageDirectoryManager(aq.getContext(),listener);
                     String directory = idm.saveToInternalStorage(bmp, url);
-                    idm.loadImageFromStorage(url);
+//                    idm.loadImageFromStorage(url);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -144,9 +144,9 @@ public class ConnectServer {
             @Override
             public void callback(String url, File file, AjaxStatus status) {
                 try {
-                    VideoDirectoryManager vdm = new VideoDirectoryManager(aq.getContext());
+                    VideoDirectoryManager vdm = new VideoDirectoryManager(aq.getContext(),listener);
                     String directory = vdm.saveToInternalStorage(file, url);
-                    vdm.loadImageFromStorage(url);
+//                    vdm.loadImageFromStorage(url);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -163,9 +163,9 @@ public class ConnectServer {
             @Override
             public void callback(String url, File file, AjaxStatus status) {
                 try {
-                    AudioDirectoryManager adm = new AudioDirectoryManager(aq.getContext());
+                    AudioDirectoryManager adm = new AudioDirectoryManager(aq.getContext(),listener);
                     String directory = adm.saveToInternalStorage(file, url);
-                    adm.loadImageFromStorage(url);
+//                    adm.loadImageFromStorage(url);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

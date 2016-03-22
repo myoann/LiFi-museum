@@ -15,6 +15,11 @@ public class AudioDirectoryManager {
     public AudioDirectoryManager() {
     }
     Context context;
+    ResultCallBack listener;
+    public AudioDirectoryManager(Context context,ResultCallBack listener) {
+        this.context = context;
+        this.listener = listener;
+    }
     public AudioDirectoryManager(Context context) {
         this.context = context;
     }
@@ -26,7 +31,7 @@ public class AudioDirectoryManager {
         // Create imageDir
         int pos = urlAudio.lastIndexOf("/");
         String nameImage = urlAudio.substring(pos+1);
-        System.out.println("nameAudio WRITE ====="+nameImage);
+        System.out.println("WRITEAUDIO ====" + directory.getAbsolutePath());
         File mypath = new File(directory,nameImage);
 
         FileOutputStream fos = null;
@@ -41,12 +46,12 @@ public class AudioDirectoryManager {
             }
             fos.flush();
             fos.close();
+            listener.DataSaveInSQLiteCallBack();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             fos.close();
         }
-        System.out.println("WRITEAUDIO ====" + directory.getAbsolutePath());
         return directory.getAbsolutePath();
     }
 

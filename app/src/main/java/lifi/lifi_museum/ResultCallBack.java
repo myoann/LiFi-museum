@@ -6,4 +6,5 @@ package lifi.lifi_museum;
 public interface ResultCallBack {
 
     void ResultCallBack();
+    void DataSaveInSQLiteCallBack();
 }
