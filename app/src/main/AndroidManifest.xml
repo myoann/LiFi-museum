@@ -115,7 +115,7 @@
                 android:value=".activity.MainActivity" />
         </activity>
         <activity
-            android:name=".VideoPlayer"
+            android:name=".activity.VideoPlayer"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"

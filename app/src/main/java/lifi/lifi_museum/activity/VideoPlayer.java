@@ -1,4 +1,4 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.VideoView;
+
+import lifi.lifi_museum.R;
 
 public class VideoPlayer extends Activity implements MediaPlayer.OnCompletionListener,MediaPlayer.OnPreparedListener,View.OnTouchListener {
 
