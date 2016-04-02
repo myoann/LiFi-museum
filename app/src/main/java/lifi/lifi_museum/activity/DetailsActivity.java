@@ -81,13 +81,9 @@ public class DetailsActivity extends AppCompatActivity {
                 File f = vdm.loadImageFromStorage(value.getVideo().getUrl());
                 Log.d("Vidéo", "" + f);
 
-                VideoView videoView = (VideoView) findViewById(R.id.videoView);
-                MediaController mediaController = new MediaController(this);
-                mediaController.setAnchorView(videoView);
-                videoView.setMediaController(mediaController);
-                videoView.setZOrderOnTop(true);
-                videoView.setVideoURI(Uri.parse(f.getAbsolutePath()));
-                videoView.start();
+                Intent videoPlaybackActivity = new Intent(this, VideoPlayer.class);
+                videoPlaybackActivity.putExtra("filePath", f.getPath());
+                startActivity(videoPlaybackActivity);
             }
         }
 
