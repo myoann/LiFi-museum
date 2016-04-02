@@ -1,7 +1,6 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.activity;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -19,6 +18,14 @@ import com.androidquery.AQuery;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import lifi.lifi_museum.requestserver.ConnectServer;
+import lifi.lifi_museum.R;
+import lifi.lifi_museum.sqlite.sqlite.directorymanager.AudioDirectoryManager;
+import lifi.lifi_museum.sqlite.sqlite.directorymanager.ImageDirectoryManager;
+import lifi.lifi_museum.sqlite.databasemanager.ImageManager;
+import lifi.lifi_museum.sqlite.databasemanager.OeuvreManager;
+import lifi.lifi_museum.sqlite.sqlite.directorymanager.VideoDirectoryManager;
 
 public class DetailsActivity extends AppCompatActivity {
     ListView listView ;

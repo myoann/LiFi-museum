@@ -1,4 +1,4 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.nfc;
 
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
@@ -21,6 +21,9 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Arrays;
+
+import lifi.lifi_museum.R;
+import lifi.lifi_museum.nfc.NFCActivity;
 
 /**
  * Created by Yoann on 12/15/2015.

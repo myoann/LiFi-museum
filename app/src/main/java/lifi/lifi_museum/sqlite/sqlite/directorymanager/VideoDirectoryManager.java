@@ -1,4 +1,4 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.sqlite.sqlite.directorymanager;
 
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import lifi.lifi_museum.requestserver.ResultCallBack;
 
 /**
  * Created by Yoann on 2/24/2016.

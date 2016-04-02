@@ -1,4 +1,4 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.sqlite.database;
 
 /**
  * Created by Fabrice on 16/02/2016.
@@ -6,6 +6,8 @@ package lifi.lifi_museum;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import lifi.lifi_museum.sqlite.databasemanager.OeuvreManager;
 
 public class MySQLite extends SQLiteOpenHelper {
 

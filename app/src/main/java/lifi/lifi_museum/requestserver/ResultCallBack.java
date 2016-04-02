@@ -1,4 +1,4 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.requestserver;
 
 /**
  * Created by user on 30/10/2015.

@@ -1,6 +1,5 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.activity;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.androidquery.AQuery;
+
+import lifi.lifi_museum.R;
+import lifi.lifi_museum.sqlite.database.PersistToSQLite;
 
 public class SettingsActivity extends AppCompatActivity {
     Button button;

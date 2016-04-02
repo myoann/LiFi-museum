@@ -1,9 +1,12 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.sqlite.databasemanager;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import lifi.lifi_museum.requestserver.ConnectServer;
+import lifi.lifi_museum.sqlite.database.MySQLite;
 
 /**
  * Created by Fabrice on 16/02/2016.

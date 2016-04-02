@@ -1,11 +1,10 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +14,10 @@ import android.widget.Toast;
 import com.androidquery.AQuery;
 
 import java.util.ArrayList;
+
+import lifi.lifi_museum.requestserver.ConnectServer;
+import lifi.lifi_museum.R;
+import lifi.lifi_museum.sqlite.databasemanager.OeuvreManager;
 
 public class ArtsListingActivity extends AppCompatActivity {
     ListView listView ;

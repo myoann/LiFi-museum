@@ -1,4 +1,4 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

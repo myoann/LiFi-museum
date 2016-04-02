@@ -1,13 +1,13 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.lifi;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.luciom.opticallbs.SmartLightRunnable;
+
+import lifi.lifi_museum.R;
 
 public class LifiActivity extends AppCompatActivity {
 

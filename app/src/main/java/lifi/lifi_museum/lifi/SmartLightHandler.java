@@ -1,17 +1,16 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.lifi;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
-import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.luciom.opticallbs.*;
+
+import lifi.lifi_museum.activity.DetailsActivity;
 
 /**
  * Created by Yoann on 1/27/2016.

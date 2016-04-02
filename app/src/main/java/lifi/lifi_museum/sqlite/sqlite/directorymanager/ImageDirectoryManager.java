@@ -1,17 +1,17 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.sqlite.sqlite.directorymanager;
 
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.androidquery.AQuery;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import lifi.lifi_museum.requestserver.ResultCallBack;
 
 /**
  * Created by Yoann on 2/24/2016.

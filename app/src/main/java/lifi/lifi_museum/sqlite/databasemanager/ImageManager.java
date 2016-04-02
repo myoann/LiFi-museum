@@ -1,12 +1,14 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.sqlite.databasemanager;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
+
+import lifi.lifi_museum.requestserver.ConnectServer;
+import lifi.lifi_museum.sqlite.database.MySQLite;
 
 /**
  * Created by Fabrice on 22/02/2016.
@@ -22,7 +24,7 @@ public class ImageManager {
             " "+KEY_ID+" INTEGER primary key autoincrement," +
             " "+KEY_URL_IMAGE+" TEXT,"+
             " "+KEY_FOREIGNKEY_OEUVRE_IMAGE+" TEXT,"+
-            " "+"FOREIGN KEY("+KEY_FOREIGNKEY_OEUVRE_IMAGE+") REFERENCES "+OeuvreManager.TABLE_NAME+"("+OeuvreManager.KEY_ID_OEUVRE+")"+
+            " "+"FOREIGN KEY("+KEY_FOREIGNKEY_OEUVRE_IMAGE+") REFERENCES "+ OeuvreManager.TABLE_NAME+"("+OeuvreManager.KEY_ID_OEUVRE+")"+
             ");";
     private MySQLite maBaseSQLite; // notre gestionnaire du fichier SQLite
     private SQLiteDatabase db;

@@ -1,11 +1,14 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.sqlite.database;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.database.Cursor;
-import android.util.Log;
 
 import com.androidquery.AQuery;
+
+import lifi.lifi_museum.requestserver.ConnectServer;
+import lifi.lifi_museum.requestserver.ResultCallBack;
+import lifi.lifi_museum.sqlite.databasemanager.ImageManager;
+import lifi.lifi_museum.sqlite.databasemanager.OeuvreManager;
 
 /**
  * Created by Fabrice on 22/03/2016.

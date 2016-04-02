@@ -1,4 +1,4 @@
-package lifi.lifi_museum;
+package lifi.lifi_museum.requestserver;
 
 import android.graphics.Bitmap;
 
@@ -14,6 +14,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import lifi.lifi_museum.sqlite.sqlite.directorymanager.AudioDirectoryManager;
+import lifi.lifi_museum.sqlite.sqlite.directorymanager.ImageDirectoryManager;
+import lifi.lifi_museum.sqlite.sqlite.directorymanager.VideoDirectoryManager;
 
 /**
  * Created by user on 27/10/2015.
