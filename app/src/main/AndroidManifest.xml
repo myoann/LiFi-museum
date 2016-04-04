@@ -73,37 +73,34 @@
             android:label="@string/title_activity_nfc"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.MainActivity" />
+
         </activity>
         <activity
-            android:name=".nfc.NFCReader"
-            android:label="@string/app_name"
-            android:launchMode="singleTop"
-            android:parentActivityName=".activity.MainActivity">
+            android:name=".nfc.NFCWriter"
+            android:label="@string/title_activity_nfc"
+            android:parentActivityName=".nfc.NFCActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-
-                <!-- <action android:name="android.nfc.action.NDEF_DISCOVERED" /> -->
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="text/plain" />
-
-                <meta-data
-                    android:name="android.nfc.action.NDEF_DISCOVERED"
-                    android:resource="@xml/nfc_tech_filter" />
-
-                <!-- <data android:scheme="http" android:host="http://134.59.152.117:1337/images/uploads/8eba5128-d4b9-4988-a8bd-96e052d35f68.jpg"/> -->
-
-
-                <!-- <data -->
-                <!-- android:host="www.mbds-fr.org" -->
-                <!-- android:scheme="http" /> -->
+                <action android:name="android.nfc.action.TAG_DISCOVERED"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+
+
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".nfc.NFCActivity" />
+
         </activity>
         <activity
             android:name=".activity.SettingsActivity"

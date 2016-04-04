@@ -14,47 +14,48 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
-
-import com.androidquery.AQuery;
 
 import java.io.Console;
 import java.util.ArrayList;
 
 import lifi.lifi_museum.R;
 import lifi.lifi_museum.activity.DetailsActivity;
-import lifi.lifi_museum.activity.SettingsActivity;
-import lifi.lifi_museum.sqlite.database.PersistToSQLite;
 
-public class NFCActivity extends AppCompatActivity {
+public class NFCWriter extends AppCompatActivity {
 
     public NfcAdapter nfcAdapter;
     private TextView id_filtered, message;
-
+    private EditText idNFC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nfc);
+        setContentView(R.layout.activity_nfc_writer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        Button btnGoToWriter = (Button) findViewById(R.id.btn_go_to_activity_nfc_writer);
-        btnGoToWriter.setOnClickListener(goToWriterActivity);
+        Button btnGoToWriter = (Button) findViewById(R.id.btn_send_id);
+        idNFC   = (EditText)findViewById(R.id.nouvelIdTagNFC);
+        btnGoToWriter.setOnClickListener(sendID);
 
     }
-    View.OnClickListener goToWriterActivity = new
+    View.OnClickListener sendID = new
             View.OnClickListener() {
-        public void onClick(View v) {
-            final Intent redirectIntent = new Intent(NFCActivity.this, NFCWriter.class);
-            NFCActivity.this.startActivity(redirectIntent);
-        }
-    };
+                public void onClick(View v) {
+                    // TODO : Récupérer id et envoyer au Tag NFC
+                    //final Intent redirectIntent = new Intent(NFCWriter.this, NFCWriter.class);
+                    //NFCWriter.this.startActivity(redirectIntent);
+                    Log.v("Nouveau Tag NFC ", idNFC.getText().toString());
 
+                }
+            };
 
     String getTextData(byte[] payload) {
         String str = new String(payload);
