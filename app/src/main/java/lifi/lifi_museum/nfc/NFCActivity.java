@@ -87,6 +87,7 @@ public class NFCActivity extends AppCompatActivity {
         for(int i=0 ; i< rawMsgs.length;i++){
             messages.add((NdefMessage) rawMsgs[i]);
         }
+        String unmessage = "";
         int j = 0;
         for(NdefMessage m : messages){
             NdefRecord record = m.getRecords()[j];
@@ -94,14 +95,17 @@ public class NFCActivity extends AppCompatActivity {
             short tnf = record.getTnf();
             byte[] type = record.getType();
             System.out.println("ici -->"+record);
-            String message = getTextData(record.getPayload());
+            String message = new String(record.getPayload());
+            unmessage = message;
             System.out.println("message--->"+message);
-            if (message.length() > 0) {
-                final Intent redirectIntent = new Intent(this, DetailsActivity.class);
-                redirectIntent.putExtra("id_LIFI", message);
-                this.startActivity(redirectIntent);
-            }
+
             j++;
+        }
+        if (unmessage.length() > 0) {
+            System.out.println("message--->"+unmessage);
+            final Intent redirectIntent = new Intent(this, DetailsActivity.class);
+            redirectIntent.putExtra("id_LIFI", unmessage);
+            this.startActivity(redirectIntent);
         }
 
         /*defMessage[] messages;

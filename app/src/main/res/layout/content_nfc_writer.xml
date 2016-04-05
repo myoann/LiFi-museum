@@ -37,15 +37,6 @@
         android:layout_alignParentEnd="true"
         android:gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Confirmer"
-        android:id="@+id/btn_send_id"
-        android:layout_below="@+id/nouvelIdTagNFC"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="54dp" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

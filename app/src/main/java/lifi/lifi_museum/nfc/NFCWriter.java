@@ -3,11 +3,14 @@ package lifi.lifi_museum.nfc;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
+import android.nfc.FormatException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
@@ -19,9 +22,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.io.Console;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import lifi.lifi_museum.R;
@@ -41,21 +46,10 @@ public class NFCWriter extends AppCompatActivity {
         setSupportActionBar(toolbar);
         this.nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        Button btnGoToWriter = (Button) findViewById(R.id.btn_send_id);
         idNFC   = (EditText)findViewById(R.id.nouvelIdTagNFC);
-        btnGoToWriter.setOnClickListener(sendID);
 
     }
-    View.OnClickListener sendID = new
-            View.OnClickListener() {
-                public void onClick(View v) {
-                    // TODO : Récupérer id et envoyer au Tag NFC
-                    //final Intent redirectIntent = new Intent(NFCWriter.this, NFCWriter.class);
-                    //NFCWriter.this.startActivity(redirectIntent);
-                    Log.v("Nouveau Tag NFC ", idNFC.getText().toString());
 
-                }
-            };
 
     String getTextData(byte[] payload) {
         String str = new String(payload);
@@ -67,11 +61,16 @@ public class NFCWriter extends AppCompatActivity {
         return str.substring(3);
     }
 
-    @Override
     protected void onResume() {
         super.onResume();
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        this.nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+
+        IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
+        IntentFilter[] intentFiltersArray = new IntentFilter[] {ndef};
+
+        String[][] techListsArray = new String[][] {new String[] {Ndef.class.getName()}};
+
+        this.nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFiltersArray, techListsArray);
     }
 
     public void onPause() {
@@ -80,39 +79,34 @@ public class NFCWriter extends AppCompatActivity {
     }
 
 
-    public void onNewIntent(Intent intent) {
-        Tag tagFromIntent = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        //do something with tagFromIntent
-        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-        ArrayList<NdefMessage> messages = new ArrayList<NdefMessage>();
-        for(int i=0 ; i< rawMsgs.length;i++){
-            messages.add((NdefMessage) rawMsgs[i]);
-        }
-        int j = 0;
-        for(NdefMessage m : messages){
-            NdefRecord record = m.getRecords()[j];
-            byte[] id = record.getId();
-            short tnf = record.getTnf();
-            byte[] type = record.getType();
-            System.out.println("ici -->"+record);
-            String message = getTextData(record.getPayload());
-            System.out.println("message--->"+message);
-            if (message.length() > 0) {
-                final Intent redirectIntent = new Intent(this, DetailsActivity.class);
-                redirectIntent.putExtra("id_LIFI", message);
-                this.startActivity(redirectIntent);
-            }
-            j++;
-        }
 
-        /*defMessage[] messages;
-        if (rawMsgs != null) {
-            msgs = new NdefMessage[rawMsgs.length];
-            for (int i = 0; i < rawMsgs.length; i++) {
-                messages[i] = (NdefMessage) rawMsgs[i];
+    @Override
+    protected void onNewIntent(Intent intent) {
+        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+        final Ndef ndef = Ndef.get(tag);
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    ndef.connect();
+                    try {
+
+                        NdefMessage message = new NdefMessage(NdefRecord.createApplicationRecord(idNFC.getText().toString()));
+                        ndef.writeNdefMessage(message);
+                    }
+                    catch(FormatException e) {
+                        Log.e("NFC", e.getMessage(), e);
+                    }
+                    ndef.close();
+                }
+                catch(IOException e) {
+                    Log.e("NFC", e.getMessage(), e);
+                }
             }
-            System.out.println("toto->" + rawMsgs);
-        }*/
+        }).start();
+        Toast.makeText(NFCWriter.this, "Nouvel ID enregistré :"+idNFC.getText().toString()+"", Toast.LENGTH_LONG).show();
+
     }
 
     @Override

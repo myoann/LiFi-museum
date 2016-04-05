@@ -50,9 +50,12 @@ public class DetailsActivity extends AppCompatActivity {
         value.setVideo(v);
         if (redirectIntent.getStringExtra("id") != null && redirectIntent.getStringExtra("id") != "") {
             String idElement = redirectIntent.getStringExtra("id");
+            System.out.println("DANS ID === "+idElement);
+
             value = this.recupererOeuvre(idElement, false);
         } else if (redirectIntent.getStringExtra("id_LIFI") != null && redirectIntent.getStringExtra("id_LIFI") != ""){
             String idElement = redirectIntent.getStringExtra("id_LIFI");
+            System.out.println("DANS ID LIFI ==== "+idElement);
             value = this.recupererOeuvre(idElement, true);
         }
 
