@@ -91,9 +91,10 @@ public class NFCWriter extends AppCompatActivity {
                 try {
                     ndef.connect();
                     try {
-
-                        NdefMessage message = new NdefMessage(NdefRecord.createApplicationRecord(idNFC.getText().toString()));
-                        ndef.writeNdefMessage(message);
+                        if(idNFC.getText().toString().length()==8){
+                            NdefMessage message = new NdefMessage(NdefRecord.createApplicationRecord(idNFC.getText().toString()));
+                            ndef.writeNdefMessage(message);
+                        }
                     }
                     catch(FormatException e) {
                         Log.e("NFC", e.getMessage(), e);
@@ -105,7 +106,12 @@ public class NFCWriter extends AppCompatActivity {
                 }
             }
         }).start();
-        Toast.makeText(NFCWriter.this, "Nouvel ID enregistré :"+idNFC.getText().toString()+"", Toast.LENGTH_LONG).show();
+        if(idNFC.getText().toString().length()==8){
+            Toast.makeText(NFCWriter.this, "Nouvel ID enregistré :"+idNFC.getText().toString()+"", Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(NFCWriter.this, "Vous devez saisir 6 chiffres pour l'ID", Toast.LENGTH_LONG).show();
+        }
 
     }
 
