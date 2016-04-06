@@ -16,6 +16,7 @@ import android.widget.Button;
 import lifi.lifi_museum.R;
 import lifi.lifi_museum.lifi.LifiActivity;
 import lifi.lifi_museum.nfc.NFCActivity;
+import lifi.lifi_museum.nfc.NotationNFCActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -103,6 +104,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.nav_about) {
             startActivity(new Intent(this, AboutActivity.class));
+        }else if(id==R.id.notation_nfc){
+            startActivity(new Intent(this, NotationNFCActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

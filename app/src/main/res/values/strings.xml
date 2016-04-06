@@ -160,4 +160,6 @@
     <string name="title_activity_nfc">NFC</string>
     <string name="title_activity_about">À propos</string>
     <string name="title_activity_video_player">VideoPlayer</string>
+    <string name="title_activity_notation_nfc">NotationNFCActivity</string>
+    <string name="title_activity_notation_nfcwriter">NotationNFCWriter</string>
 </resources>
