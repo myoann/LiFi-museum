@@ -101,7 +101,7 @@ public class NFCActivity extends AppCompatActivity {
 
             j++;
         }
-        if (unmessage.length() > 0) {
+        if (unmessage.length() == 8 && unmessage.startsWith("00100")) {
             System.out.println("message--->"+unmessage);
             final Intent redirectIntent = new Intent(this, DetailsActivity.class);
             redirectIntent.putExtra("id_LIFI", unmessage);

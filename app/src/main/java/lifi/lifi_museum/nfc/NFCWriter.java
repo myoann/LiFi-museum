@@ -19,8 +19,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +38,7 @@ public class NFCWriter extends AppCompatActivity {
 
     public NfcAdapter nfcAdapter;
     private TextView id_filtered, message;
-    private EditText idNFC;
+    private Spinner idNFCSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +47,12 @@ public class NFCWriter extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        idNFCSpinner = (Spinner)findViewById(R.id.listIDOeuvre);
 
-        idNFC   = (EditText)findViewById(R.id.nouvelIdTagNFC);
-
+        String[] idOeuvres={"00100292","00100295","00100296"};
+        ArrayAdapter<String> dataAdapterNFCSpinner = new ArrayAdapter<String>(this, R.layout.spinner_layout,idOeuvres);
+        dataAdapterNFCSpinner.setDropDownViewResource(R.layout.spinner_layout);
+        idNFCSpinner.setAdapter(dataAdapterNFCSpinner);
     }
 
 
@@ -91,8 +96,9 @@ public class NFCWriter extends AppCompatActivity {
                 try {
                     ndef.connect();
                     try {
-                        if(idNFC.getText().toString().length()==8){
-                            NdefMessage message = new NdefMessage(NdefRecord.createApplicationRecord(idNFC.getText().toString()));
+                        if(idNFCSpinner.getSelectedItem().toString().length()==8){
+
+                            NdefMessage message = new NdefMessage(NdefRecord.createApplicationRecord(idNFCSpinner.getSelectedItem().toString()));
                             ndef.writeNdefMessage(message);
                         }
                     }
@@ -106,8 +112,8 @@ public class NFCWriter extends AppCompatActivity {
                 }
             }
         }).start();
-        if(idNFC.getText().toString().length()==8){
-            Toast.makeText(NFCWriter.this, "Nouvel ID enregistré :"+idNFC.getText().toString()+"", Toast.LENGTH_LONG).show();
+        if(idNFCSpinner.getSelectedItem().toString().length()==8){
+            Toast.makeText(NFCWriter.this, "Nouvel ID enregistré :"+idNFCSpinner.getSelectedItem().toString()+"", Toast.LENGTH_LONG).show();
         }
         else{
             Toast.makeText(NFCWriter.this, "Vous devez saisir 6 chiffres pour l'ID", Toast.LENGTH_LONG).show();

@@ -37,21 +37,24 @@
         android:layout_alignParentEnd="true"
         android:gravity="center_horizontal" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/nouvelIdTagNFC"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Nouvel ID :"
         android:id="@+id/textView8"
-        android:layout_above="@+id/nouvelIdTagNFC"
         android:textSize="25dp"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/textView6"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="39dp" />
+
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listIDOeuvre"
+        android:spinnerMode="dropdown"
+        android:layout_below="@+id/textView8"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="false" />
+
 </RelativeLayout>
